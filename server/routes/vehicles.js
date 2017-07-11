@@ -35,7 +35,7 @@ const getVehiclesDoorsStatusById = (req, res) => {
 }
 
 /**
- * Returns the ........ on the vehicle specified by the id.
+ * Returns the fuel levels on the vehicle specified by the id.
  * @param {number} id - The id of the vehicle
  */
 const getVehiclesFuelLevelById = (req, res) => {
