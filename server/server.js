@@ -8,6 +8,7 @@ var helmet = require('helmet');
 
 // Routes
 var index = require('./routes/index');
+var vehicles = require('./routes/vehicles');
 
 
 var app = express();
@@ -29,6 +30,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/vehicles', vehicles);
 
 
 // Always return the main index.html, so react-router render the route in the client

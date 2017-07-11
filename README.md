@@ -1,3 +1,26 @@
+// var axiosForGM = axios.create({
+//   baseURL: 'https://some-domain.com/api/',
+//   timeout: 1000,
+//   headers: {'X-Custom-Header': 'foobar'}
+// });
+
+// curl http://gmapi.azurewebsites.net/getVehicleInfoService 
+// -X POST 
+// -H 'Content-Type: application/json' 
+// -d '{"id": "1234", "responseType": "JSON"}' \
+// -d '{"id": "1234",  "command": "START_VEHICLE", "responseType": "JSON"}' \
+
+// curl http://gmapi.azurewebsites.net/actionEngineService -X POST -H 'Content-Type: application/json' -d '{"id": "1234",  "command": "START_VEHICLE", "responseType": "JSON"}' 
+
+
+
+
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
