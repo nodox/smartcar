@@ -14,8 +14,24 @@ var _ = require('lodash');
  */
 const getVehiclesById = (req, res) => {
 
+  const vehicleResponseTransformer = (response) => {
+    let uncleanResponseData = JSON.parse(response).data;
+    let fourDoorSedanTruthValue = JSON.parse(uncleanResponseData.fourDoorSedan.value.toLowerCase());
+    let data = {};
+
+    data.vin = uncleanResponseData.vin.value;
+    data.color = uncleanResponseData.color.value;
+    data.doorCount = (fourDoorSedanTruthValue == true) ? 4 : 2;
+    data.driveTrain = uncleanResponseData.driveTrain.value;
+
+    return data;
+  };
+
+
   var paramsDataForGM = { 'id': req.params.id.toString(), "responseType": "JSON" };
-  axios.post('http://gmapi.azurewebsites.net/getVehicleInfoService', paramsDataForGM)
+  axios.post('http://gmapi.azurewebsites.net/getVehicleInfoService', paramsDataForGM, {
+    transformResponse: vehicleResponseTransformer
+  })
   .then(responseObject => {
     res.send(responseObject.data);
   }).catch(err => {
