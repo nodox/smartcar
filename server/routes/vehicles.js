@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var axios = require('axios');
+var _ = require('lodash');
 
 // Documents the API paths
 // https://github.com/swagger-api/swagger-node
@@ -27,8 +28,28 @@ const getVehiclesById = (req, res) => {
  * @param {number} id - The id of the vehicle
  */
 const getVehiclesDoorsStatusById = (req, res) => {
+
+  const doorStatusResponseTransformer = (response) => {
+    var uncleanResponseData = JSON.parse(response).data.doors.values;
+
+    var data = [];
+    _.forEach(uncleanResponseData, (obj) => {
+      var door = {};
+
+      var status = JSON.parse(obj.locked.value.toLowerCase());
+      door.locked = status;
+      door.location = obj.location.value;
+      data.push(door);
+
+    });
+
+    return data;
+  };
+
   var paramsDataForGM = { 'id': req.params.id.toString(), "responseType": "JSON" };
-  axios.post('http://gmapi.azurewebsites.net/getSecurityStatusService', paramsDataForGM)
+  axios.post('http://gmapi.azurewebsites.net/getSecurityStatusService', paramsDataForGM, { 
+    transformResponse: doorStatusResponseTransformer
+  })
   .then(responseObject => {
     res.send(responseObject.data);
   }).catch(err => {
