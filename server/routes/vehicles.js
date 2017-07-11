@@ -41,8 +41,17 @@ const getVehiclesDoorsStatusById = (req, res) => {
  * @param {number} id - The id of the vehicle
  */
 const getVehiclesFuelLevelById = (req, res) => {
+
+  const fuelLevelsResponseTransformer = (response) => {
+    var data = {};
+    data.percent = JSON.parse(response).data.tankLevel.value;
+    return data;
+  };
+
   var paramsDataForGM = { 'id': req.params.id.toString(), "responseType": "JSON" };
-  axios.post('http://gmapi.azurewebsites.net/getEnergyService', paramsDataForGM)
+  axios.post('http://gmapi.azurewebsites.net/getEnergyService', paramsDataForGM, { 
+    transformResponse: fuelLevelsResponseTransformer
+  })
   .then(responseObject => {
     res.send(responseObject.data);
   }).catch(err => {
