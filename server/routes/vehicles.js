@@ -100,7 +100,7 @@ const getVehiclesFuelLevelById = (req, res) => {
 }
 
 /**
- * Returns the ........ on the vehicle specified by the id.
+ * Returns the battery level on the vehicle specified by the id.
  * @param {number} id - The id of the vehicle
  */
 const getVehiclesBatteryLevelById = (req, res) => {
@@ -126,7 +126,7 @@ const getVehiclesBatteryLevelById = (req, res) => {
 
 
 /**
- * Returns the ........ on the vehicle specified by the id.
+ * Returns the engine state on the vehicle specified by the id.
  * @param {number} id - The id of the vehicle
  */
 const setVehiclesEngineStateById = (req, res) => {
