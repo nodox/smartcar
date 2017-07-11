@@ -46,13 +46,13 @@ const getVehiclesById = (req, res) => {
 const getVehiclesDoorsStatusById = (req, res) => {
 
   const doorStatusResponseTransformer = (response) => {
-    var uncleanResponseData = JSON.parse(response).data.doors.values;
+    let uncleanResponseData = JSON.parse(response).data.doors.values;
 
-    var data = [];
+    let data = [];
     _.forEach(uncleanResponseData, (obj) => {
-      var door = {};
+      let door = {};
 
-      var status = JSON.parse(obj.locked.value.toLowerCase());
+      let status = JSON.parse(obj.locked.value.toLowerCase());
       door.locked = status;
       door.location = obj.location.value;
       data.push(door);
@@ -62,7 +62,7 @@ const getVehiclesDoorsStatusById = (req, res) => {
     return data;
   };
 
-  var paramsDataForGM = { 'id': req.params.id.toString(), "responseType": "JSON" };
+  let paramsDataForGM = { 'id': req.params.id.toString(), "responseType": "JSON" };
   axios.post('http://gmapi.azurewebsites.net/getSecurityStatusService', paramsDataForGM, { 
     transformResponse: doorStatusResponseTransformer
   })
@@ -80,12 +80,15 @@ const getVehiclesDoorsStatusById = (req, res) => {
 const getVehiclesFuelLevelById = (req, res) => {
 
   const fuelLevelsResponseTransformer = (response) => {
-    var data = {};
-    data.percent = JSON.parse(response).data.tankLevel.value;
+
+    let uncleanResponseData = JSON.parse(response);
+    let data = {};
+
+    data.percent = uncleanResponseData.data.tankLevel.value;
     return data;
   };
 
-  var paramsDataForGM = { 'id': req.params.id.toString(), "responseType": "JSON" };
+  let paramsDataForGM = { 'id': req.params.id.toString(), "responseType": "JSON" };
   axios.post('http://gmapi.azurewebsites.net/getEnergyService', paramsDataForGM, { 
     transformResponse: fuelLevelsResponseTransformer
   })
@@ -103,13 +106,14 @@ const getVehiclesFuelLevelById = (req, res) => {
 const getVehiclesBatteryLevelById = (req, res) => {
 
   const batteryResponseTransformer = (response) => {
-    var data = {};
-    data.percent = JSON.parse(response).data.batteryLevel.value;
+    let uncleanResponseData = JSON.parse(response);
+    let data = {};
+    data.percent = uncleanResponseData.data.batteryLevel.value;
     return data;
   };
 
 
-  var paramsDataForGM = { 'id': req.params.id.toString(), "responseType": "JSON" };
+  let paramsDataForGM = { 'id': req.params.id.toString(), "responseType": "JSON" };
   axios.post('http://gmapi.azurewebsites.net/getEnergyService', paramsDataForGM, { 
     transformResponse: batteryResponseTransformer
   })
@@ -142,9 +146,9 @@ const setVehiclesEngineStateById = (req, res) => {
       "EXECUTED": "success",
       "FAILED": "error"
     }
-    var responseData = JSON.parse(response);
-    var data = {};
-    data.status = reponsesForGM[responseData.actionResult.status];
+    let uncleanResponseData = JSON.parse(response);
+    let data = {};
+    data.status = reponsesForGM[uncleanResponseData.actionResult.status];
     return data;
   };
 
