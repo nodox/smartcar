@@ -14,7 +14,7 @@ chai.use(chaiHttp);
 chai.use(require('chai-things'));
 
 
-describe('Vehicles', () => {
+describe('GM Vehicles API', () => {
 
   /**
    * Test the /GET route
