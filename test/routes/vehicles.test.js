@@ -1,4 +1,7 @@
 //Require the dev-dependencies
+process.env.NODE_ENV = 'test';
+
+
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../../server/server');
@@ -32,7 +35,7 @@ describe('Vehicles', () => {
         });
     });
 
-    it('should return error, when using an unknown id', (done) => {
+    it('should return empty, when using an unknown id', (done) => {
       let unknownId = -999;
       let url = '/vehicles/' + unknownId.toString();
       chai.request(server)
@@ -44,7 +47,7 @@ describe('Vehicles', () => {
         });
     });
   
-    it('should return error, when using an invalid id', (done) => {
+    it('should return empty, when using an invalid id', (done) => {
       let invalidId = "xxx";
       let url = '/vehicles/' + invalidId.toString();
       chai.request(server)
@@ -61,32 +64,40 @@ describe('Vehicles', () => {
 
   describe('GET /vehicles/:id/doors', () => {
 
-    it('should return array of size 2 for two door coupes', (done) => {
-      let id = 1235;
-      let url = '/vehicles/' + id.toString() +'/doors';
+    describe('vehicles with two doors', () => {
+      it('should return array of size 2', (done) => {
+        let id = 1235;
+        let url = '/vehicles/' + id.toString() +'/doors';
 
-      chai.request(server)
-        .get(url)
-        .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.an('array').that.has.lengthOf(2);
+        chai.request(server)
+          .get(url)
+          .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.an('array').that.has.lengthOf(2);
 
-          done();
-        });
+            done();
+          });
+      });
+
     });
 
-    it('should return array of size 4 for four door sedans', (done) => {
-      let id = 1234;
-      let url = '/vehicles/' + id.toString() +'/doors';
+    describe('vehicles with four doors', () => {
 
-      chai.request(server)
-        .get(url)
-        .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.an('array').that.has.lengthOf(4);
-          done();
-        });
+      it('should return array of size 4', (done) => {
+        let id = 1234;
+        let url = '/vehicles/' + id.toString() +'/doors';
+
+        chai.request(server)
+          .get(url)
+          .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.an('array').that.has.lengthOf(4);
+            done();
+          });
+      });    
+
     });
+
 
     it('should return an array of doors with locked and location values', (done) => {
       let id = 1235;
@@ -108,19 +119,27 @@ describe('Vehicles', () => {
 
 
   describe('GET /vehicles/:id/fuel', () => {
-    xit('should GET all the books', (done) => {
+    let id = 1235;
+    let url = '/vehicles/' + id.toString() +'/fuel';
+
+    it('should ', (done) => {
       chai.request(server)
-        .get('//vehicles/:id/fuel')
+        .get(url)
         .end((err, res) => {
             res.should.have.status(200);
           done();
         });
     });
+
+
+
+
+
   });
 
 
   describe('GET /vehicles/:id/battery', () => {
-    xit('should GET all the books', (done) => {
+    xit('should ....', (done) => {
       chai.request(server)
         .post('/book')
         .end((err, res) => {
@@ -131,7 +150,7 @@ describe('Vehicles', () => {
   });
 
   describe('POST /vehicles/:id/engine', () => {
-    xit('should GET all the books', (done) => {
+    xit('should ....', (done) => {
       chai.request(server)
         .post('/book')
         .end((err, res) => {
