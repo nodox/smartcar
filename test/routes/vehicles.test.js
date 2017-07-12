@@ -20,7 +20,7 @@ describe('GM Vehicles API', () => {
    * Test the /GET route
    */
   describe('GET /vehicles/:id', () => {
-    it('should GET a vehicle by id, when using a valid id', (done) => {
+    it('should GET a single vehicle object by id', (done) => {
       let id = 1234;
       let url = '/vehicles/' + id.toString();
       chai.request(server)
@@ -120,18 +120,17 @@ describe('GM Vehicles API', () => {
 
   describe('GET /vehicles/:id/fuel', () => {
     let id = 1235;
-    let url = '/vehicles/' + id.toString() +'/fuel';
+    let url = '/vehicles/' + id.toString() + '/fuel';
 
-    it('should ', (done) => {
+    it('should return the fuel level', (done) => {
       chai.request(server)
         .get(url)
         .end((err, res) => {
             res.should.have.status(200);
+            res.body.should.have.property('percent').that.is.a('number');
           done();
         });
     });
-
-
 
 
 
@@ -139,25 +138,65 @@ describe('GM Vehicles API', () => {
 
 
   describe('GET /vehicles/:id/battery', () => {
-    xit('should ....', (done) => {
+    let id = 1235;
+    let url = '/vehicles/' + id.toString() + '/battery';
+
+    it('should return the battery level', (done) => {
       chai.request(server)
-        .post('/book')
+        .get(url)
         .end((err, res) => {
             res.should.have.status(200);
+            res.body.should.have.property('percent').that.is.a('number');
           done();
         });
     });
+
+
   });
 
   describe('POST /vehicles/:id/engine', () => {
-    xit('should ....', (done) => {
-      chai.request(server)
-        .post('/book')
-        .end((err, res) => {
-            res.should.have.status(200);
-          done();
-        });
+
+
+    describe('START action', () => {
+
+      let id = 1235;
+      let url = '/vehicles/' + id.toString() + '/engine';
+      let data = { action: 'START'};
+
+      it('should return status', (done) => {
+        chai.request(server)
+          .post(url)
+          .send(data)
+          .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.have.property('status');
+            done();
+          });
+      });
     });
+
+
+
+    describe('STOP action', () => {
+
+      let id = 1235;
+      let url = '/vehicles/' + id.toString() + '/engine';
+      let data = { action: 'STOP'};
+
+      it('should return status', (done) => {
+        chai.request(server)
+          .post(url)
+          .send(data)
+          .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.have.property('status');
+            done();
+          });
+      });
+    });
+
+
   });
+
 
 });
