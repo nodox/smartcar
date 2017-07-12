@@ -19,11 +19,12 @@ app.set('view engine', 'pug');
 
 
 app.use(helmet())
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
+if (process.env.NODE_ENV !== 'test') {
+  app.use(logger('dev'));
+}
 
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
