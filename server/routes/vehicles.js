@@ -4,8 +4,8 @@ var express = require('express');
 var router = express.Router();
 var axios = require('axios');
 var _ = require('lodash');
+// var vehicleResponseTransformer = require('../helpers/transformer').vehicleResponseTransformer;
 
-// Documents the API paths
 // https://github.com/swagger-api/swagger-node
 
 /**
@@ -33,9 +33,9 @@ const getVehiclesById = (req, res) => {
     transformResponse: vehicleResponseTransformer
   })
   .then(responseObject => {
-    res.send(responseObject.data);
+    res.status(200).send(responseObject.data);
   }).catch(err => {
-    console.log(err);
+    res.status(400).send(err);
   });
 }
 
@@ -67,9 +67,9 @@ const getVehiclesDoorsStatusById = (req, res) => {
     transformResponse: doorStatusResponseTransformer
   })
   .then(responseObject => {
-    res.send(responseObject.data);
+    res.status(200).send(responseObject.data);
   }).catch(err => {
-    console.log(err);
+    res.status(400).send(err);
   });
 }
 
@@ -95,7 +95,7 @@ const getVehiclesFuelLevelById = (req, res) => {
   .then(responseObject => {
     res.send(responseObject.data);
   }).catch(err => {
-    console.log(err);
+    res.status(400).send(err);
   });
 }
 
@@ -120,7 +120,7 @@ const getVehiclesBatteryLevelById = (req, res) => {
   .then(responseObject => {
     res.send(responseObject.data);
   }).catch(err => {
-    console.log(err);
+    res.status(400).send(err);
   });
 }
 
@@ -158,7 +158,7 @@ const setVehiclesEngineStateById = (req, res) => {
   .then(responseObject => {
     res.status(200).send(responseObject.data);
   }).catch(err => {
-    console.log(err);
+    res.status(400).send(err);
   });
 }
 
