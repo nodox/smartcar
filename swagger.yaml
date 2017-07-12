@@ -1,0 +1,184 @@
+swagger: '2.0'
+info:
+  title: GM HTTP API Spec
+  version: '0.0.5'
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+basePath: /localhost:3005
+
+
+paths:
+
+  #
+  # Path Definitions
+  #
+  
+  /vehicles/{id}:
+    parameters:
+       - $ref: '#/parameters/idParam'
+    get:
+      description: |
+        Returns a single vehicle object, containing identifying information
+      responses:
+        '200':
+          description: Success
+          schema:
+            title: Vehicle
+            description: |
+              A single vehicle object, containing identifying information
+            properties:
+              vin:
+                description: The vehicle vin number
+                type: string
+              color:
+                description: The vehicle color
+                type: string
+              doorCount:
+                description: Number of doors on the vehicle
+                type: string
+              driveTrain:
+                description: The type of drive train
+                type: string
+
+
+  /vehicles/{id}/engine:
+    parameters:
+      - $ref: '#/parameters/idParam'
+    post:
+      description: |
+        Start or stop the vehicle's engine. This also includes the vehicles
+        with electric motors. `START` allows the driver to start moving the
+        vehicle
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: |
+            The action to take on the engine. `START`: start the vehicle with
+            the ability to drive the vehicle. `STOP`: turn the vehicle off.
+          schema:
+            required:
+              - action
+            properties:
+              action:
+                type: string
+                enum:
+                  - START
+                  - STOP
+      responses:
+        '200':
+          $ref: '#/responses/ActionSuccessResponse'
+
+
+  /vehicles/{id}/fuel:
+    parameters:
+      - $ref: '#/parameters/idParam'
+    get:
+      description: |
+        Returns the percent of the fuel remaining in the vehicle's gas tank
+      responses:
+        '200':
+          description: Success
+          schema:
+            title: Fuel
+            description: Status of the fuel remaining in the vehicle's gas tank
+            required:
+              - percent
+            properties:
+              percent:
+                description: |
+                  The estimated remaining distance the car can travel (in
+                  Kilometers)
+                type: number
+                format: integer
+                example: 40
+
+
+  /vehicles/{id}/battery:
+    parameters:
+      - $ref: '#/parameters/idParam'
+    get:
+      description: |
+        Returns the battery percent level
+      responses:
+        '200':
+          description: Success
+          schema:
+            title: Battery
+            description: Percent of the battery remaining in the vehicle
+            required:
+              - percent
+            properties:
+              percent:
+                description: The remaining level of battery
+                type: number
+                format: integer
+                example: 31
+
+
+  /vehicles/{id}/doors:
+    parameters:
+      - $ref: '#/parameters/idParam'
+    get:
+      description: |
+        Returns the status of the doors in the vehicle
+      responses:
+        '200':
+          description: Array of the doors on a vehicle
+          schema:
+            $ref: '#/definitions/Doors'
+
+
+parameters:
+
+  #
+  # Parameter Definitions
+  #
+  
+  idParam:
+    name: id
+    in: path
+    description: A vehicle ID (UUID v4)
+    required: true
+    type: string
+    pattern: '[0-9][0-9][0-9][0-9]'
+
+
+definitions:
+  Door:
+    properties:
+      locked:
+        type: string
+        description: Status of the door.
+      location:
+        type: string
+        description: Location of the door on the car.
+  Doors:
+    type: array
+    items:
+      $ref: '#/definitions/Door'
+
+        
+responses:
+
+  #
+  # Response Definitions
+  #
+  
+  ActionSuccessResponse:
+    description: Success
+    schema:
+      title: Success
+      description: Success
+      required:
+        - status
+      properties:
+        status:
+          description: This will always be set to success for HTTP 200
+          type: string
+          enum:
+            - success
