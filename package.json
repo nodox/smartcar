@@ -24,6 +24,7 @@
     "react-scripts": "1.0.10"
   },
   "scripts": {
+    "mocha": "./node_modules/mocha/bin/mocha",
     "serve": "node ./bin/www",
     "start": "react-scripts start",
     "build": "react-scripts build",
