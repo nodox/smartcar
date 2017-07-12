@@ -6,6 +6,21 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var helmet = require('helmet');
 
+const options = {
+  swaggerDefinition: {
+    info: {
+      title: 'Smartcar GM API',
+      version: '0.0.1',
+      description: 'Deliver smart car information from GM API',
+    },
+    host: 'localhost:3005',
+    basePath: '/',
+  },
+  apis: ['./routes/**/*.js'],
+};
+var swaggerJSDoc = require('swagger-jsdoc');
+var swaggerSpec = swaggerJSDoc(options);
+
 // Routes
 var index = require('./routes/index');
 var vehicles = require('./routes/vehicles');
@@ -33,6 +48,10 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
 app.use('/', index);
 app.use('/vehicles', vehicles);
 
+app.get('/swagger.json', function(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
 
 // Always return the main index.html, so react-router render the route in the client
 // app.use('*', (req, res) => {

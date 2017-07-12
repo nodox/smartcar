@@ -1,5 +1,4 @@
-// might need to include lodash???????
-
+var _ = require('lodash');
 
 /**
  * Returns ........
@@ -18,8 +17,10 @@ const vehicleResponseTransformer = (response) => {
   return data;
 };
 
-
-
+/**
+ * Returns ........
+ * @param {number} id - The id of the vehicle
+ */
 const doorStatusResponseTransformer = (response) => {
   let uncleanResponseData = JSON.parse(response).data.doors.values;
 
@@ -35,4 +36,54 @@ const doorStatusResponseTransformer = (response) => {
   });
 
   return data;
+};
+
+/**
+ * Returns ........
+ * @param {number} id - The id of the vehicle
+ */
+const fuelLevelsResponseTransformer = (response) => {
+  let uncleanResponseData = JSON.parse(response);
+  let data = {};
+  let isValueNumber = _.parseInt(uncleanResponseData.data.tankLevel.value);
+  data.percent =  isValueNumber && isValueNumber != null ?  _.parseInt(uncleanResponseData.data.tankLevel.value) : 0;
+  return data;
+};
+
+
+/**
+ * Returns ........
+ * @param {number} id - The id of the vehicle
+ */
+const batteryResponseTransformer = (response) => {
+  let uncleanResponseData = JSON.parse(response);
+  let data = {};
+  let isValueNumber = _.parseInt(uncleanResponseData.data.batteryLevel.value);
+  data.percent =  isValueNumber && isValueNumber != null ? _.parseInt(uncleanResponseData.data.batteryLevel.value) : 0;
+  return data;
+};
+
+
+/**
+ * Returns ........
+ * @param {number} id - The id of the vehicle
+ */
+const engineResponseTransformer = (response) => {
+  const reponsesForGM = {
+    "EXECUTED": "success",
+    "FAILED": "error"
+  }
+  let uncleanResponseData = JSON.parse(response);
+  let data = {};
+  data.status = reponsesForGM[uncleanResponseData.actionResult.status];
+  return data;
+};
+
+
+module.exports = {
+  vehicleResponseTransformer,
+  doorStatusResponseTransformer,
+  fuelLevelsResponseTransformer,
+  batteryResponseTransformer,
+  engineResponseTransformer,
 };
