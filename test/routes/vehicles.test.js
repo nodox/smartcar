@@ -179,7 +179,7 @@ describe('GM Vehicles API', () => {
 
     describe('STOP action', () => {
 
-      let id = 1235;
+      let id = 1234;
       let url = '/vehicles/' + id.toString() + '/engine';
       let data = { action: 'STOP'};
 
