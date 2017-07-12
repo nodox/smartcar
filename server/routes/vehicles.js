@@ -83,8 +83,8 @@ const getVehiclesFuelLevelById = (req, res) => {
 
     let uncleanResponseData = JSON.parse(response);
     let data = {};
-
-    data.percent = uncleanResponseData.data.tankLevel.value;
+    let isValueNumber = _.parseInt(uncleanResponseData.data.tankLevel.value);
+    data.percent =  isValueNumber && isValueNumber != null ?  _.parseInt(uncleanResponseData.data.tankLevel.value) : 0;
     return data;
   };
 
@@ -108,7 +108,8 @@ const getVehiclesBatteryLevelById = (req, res) => {
   const batteryResponseTransformer = (response) => {
     let uncleanResponseData = JSON.parse(response);
     let data = {};
-    data.percent = uncleanResponseData.data.batteryLevel.value;
+    let isValueNumber = _.parseInt(uncleanResponseData.data.batteryLevel.value);
+    data.percent =  isValueNumber && isValueNumber != null ? _.parseInt(uncleanResponseData.data.batteryLevel.value) : 0;
     return data;
   };
 
