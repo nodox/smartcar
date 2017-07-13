@@ -10,7 +10,7 @@ const getVehiclesById = (req, res) => {
     id: req.params.id.toString(),
     responseType: 'JSON',
   };
-  
+
   axios.post('http://gmapi.azurewebsites.net/getVehicleInfoService', paramsDataForGM, {
     transformResponse: transformer.vehicleResponseTransformer,
   })
