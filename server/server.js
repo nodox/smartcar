@@ -5,22 +5,7 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const index = require('./routes/index');
 const vehicles = require('./routes/vehicles.routes');
-const swaggerJSDoc = require('swagger-jsdoc');
 
-const options = {
-  swaggerDefinition: {
-    info: {
-      title: 'Smartcar GM API',
-      version: '0.0.1',
-      description: 'Deliver smart car information from GM API',
-    },
-    host: 'localhost:3005',
-    basePath: '/',
-  },
-  apis: ['./routes/**/*.js'],
-};
-
-const swaggerSpec = swaggerJSDoc(options);
 const app = express();
 
 app.use(helmet());
@@ -33,11 +18,6 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.use('/', index);
 app.use('/vehicles', vehicles);
-
-app.get('/swagger.json', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpec);
-});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

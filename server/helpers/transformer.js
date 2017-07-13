@@ -2,7 +2,7 @@ const _ = require('lodash');
 
 /**
  * Returns vehicle attributes according to smart car specs
- * @param {number} id - The id of the vehicle
+ * @param {object} response - The response object from GM api
  */
 const vehicleResponseTransformer = (response) => {
   const uncleanResponseData = JSON.parse(response).data;
@@ -17,7 +17,7 @@ const vehicleResponseTransformer = (response) => {
 
 /**
  * Returns door status of a vehicle according to smart car specs
- * @param {number} id - The id of the vehicle
+ * @param {object} response - The response object from GM api
  */
 const doorStatusResponseTransformer = (response) => {
   const uncleanResponseData = JSON.parse(response).data.doors.values;
@@ -35,7 +35,7 @@ const doorStatusResponseTransformer = (response) => {
 
 /**
  * Returns fuel levels of a vehicle according to smart car specs
- * @param {number} id - The id of the vehicle
+ * @param {object} response - The response object from GM api
  */
 const fuelLevelsResponseTransformer = (response) => {
   const uncleanResponseData = JSON.parse(response);
@@ -49,7 +49,7 @@ const fuelLevelsResponseTransformer = (response) => {
 
 /**
  * Returns battery levels of a vehicle according to smart car specs
- * @param {number} id - The id of the vehicle
+ * @param {object} response - The response object from GM api
  */
 const batteryResponseTransformer = (response) => {
   const uncleanResponseData = JSON.parse(response);
@@ -64,7 +64,7 @@ const batteryResponseTransformer = (response) => {
 
 /**
  * Returns engine status after action occurs on a vehicle according to smart car specs
- * @param {number} id - The id of the vehicle
+ * @param {object} response - The response object from GM api
  */
 const engineResponseTransformer = (response) => {
   const reponsesForGM = {

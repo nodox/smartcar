@@ -30,6 +30,7 @@
     "react-scripts": "1.0.10"
   },
   "scripts": {
+    "docs": "./node_modules/.bin/jsdoc ./server/",
     "lint": "./node_modules/.bin/eslint ./server/",
     "mocha": "./node_modules/mocha/bin/mocha",
     "serve": "node ./bin/www",
