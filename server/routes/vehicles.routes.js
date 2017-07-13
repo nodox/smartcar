@@ -1,8 +1,8 @@
-// use strict!?
+const express = require('express');
+const vehicleController = require('../controllers/vehicles.controller');
 
-var express = require('express');
-var router = express.Router();
-var vehicleController = require('../controllers/vehicles.controller');
+const router = express.Router();
+
 
 router.get('/:id', vehicleController.getVehiclesById);
 router.get('/:id/doors', vehicleController.getVehiclesDoorsStatus);

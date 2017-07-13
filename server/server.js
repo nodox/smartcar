@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const index = require('./routes/index');
-const vehicles = require('./routes/vehicles');
+const vehicles = require('./routes/vehicles.routes');
 const swaggerJSDoc = require('swagger-jsdoc');
 
 const options = {

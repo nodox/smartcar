@@ -1,80 +1,79 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
 /**
- * Returns ........
+ * Returns vehicle attributes according to smart car specs
  * @param {number} id - The id of the vehicle
  */
 const vehicleResponseTransformer = (response) => {
-  let uncleanResponseData = JSON.parse(response).data;
-  let fourDoorSedanTruthValue = JSON.parse(uncleanResponseData.fourDoorSedan.value.toLowerCase());
-  let data = {};
-
+  const uncleanResponseData = JSON.parse(response).data;
+  const fourDoorSedanTruthValue = JSON.parse(uncleanResponseData.fourDoorSedan.value.toLowerCase());
+  const data = {};
   data.vin = uncleanResponseData.vin.value;
   data.color = uncleanResponseData.color.value;
-  data.doorCount = (fourDoorSedanTruthValue == true) ? 4 : 2;
+  data.doorCount = (fourDoorSedanTruthValue === true) ? 4 : 2;
   data.driveTrain = uncleanResponseData.driveTrain.value;
-
   return data;
 };
 
 /**
- * Returns ........
+ * Returns door status of a vehicle according to smart car specs
  * @param {number} id - The id of the vehicle
  */
 const doorStatusResponseTransformer = (response) => {
-  let uncleanResponseData = JSON.parse(response).data.doors.values;
+  const uncleanResponseData = JSON.parse(response).data.doors.values;
 
-  let data = [];
+  const data = [];
   _.forEach(uncleanResponseData, (obj) => {
-    let door = {};
-
-    let status = JSON.parse(obj.locked.value.toLowerCase());
+    const door = {};
+    const status = JSON.parse(obj.locked.value.toLowerCase());
     door.locked = status;
     door.location = obj.location.value;
     data.push(door);
-
   });
-
   return data;
 };
 
 /**
- * Returns ........
+ * Returns fuel levels of a vehicle according to smart car specs
  * @param {number} id - The id of the vehicle
  */
 const fuelLevelsResponseTransformer = (response) => {
-  let uncleanResponseData = JSON.parse(response);
-  let data = {};
-  let isValueNumber = _.parseInt(uncleanResponseData.data.tankLevel.value);
-  data.percent =  isValueNumber && isValueNumber != null ?  _.parseInt(uncleanResponseData.data.tankLevel.value) : 0;
+  const uncleanResponseData = JSON.parse(response);
+  const data = {};
+  const isValueNumber = _.parseInt(uncleanResponseData.data.tankLevel.value);
+  data.percent = isValueNumber && isValueNumber != null ?
+                  _.parseInt(uncleanResponseData.data.tankLevel.value) : 0;
   return data;
 };
 
 
 /**
- * Returns ........
+ * Returns battery levels of a vehicle according to smart car specs
  * @param {number} id - The id of the vehicle
  */
 const batteryResponseTransformer = (response) => {
-  let uncleanResponseData = JSON.parse(response);
-  let data = {};
-  let isValueNumber = _.parseInt(uncleanResponseData.data.batteryLevel.value);
-  data.percent =  isValueNumber && isValueNumber != null ? _.parseInt(uncleanResponseData.data.batteryLevel.value) : 0;
+  const uncleanResponseData = JSON.parse(response);
+  const data = {};
+  const isValueNumber = _.parseInt(uncleanResponseData.data.batteryLevel.value);
+
+  data.percent = isValueNumber && isValueNumber != null ?
+                  _.parseInt(uncleanResponseData.data.batteryLevel.value) : 0;
   return data;
 };
 
 
 /**
- * Returns ........
+ * Returns engine status after action occurs on a vehicle according to smart car specs
  * @param {number} id - The id of the vehicle
  */
 const engineResponseTransformer = (response) => {
   const reponsesForGM = {
-    "EXECUTED": "success",
-    "FAILED": "error"
-  }
-  let uncleanResponseData = JSON.parse(response);
-  let data = {};
+    EXECUTED: 'success',
+    FAILED: 'error',
+  };
+
+  const uncleanResponseData = JSON.parse(response);
+  const data = {};
   data.status = reponsesForGM[uncleanResponseData.actionResult.status];
   return data;
 };
