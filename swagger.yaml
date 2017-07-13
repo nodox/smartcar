@@ -90,9 +90,7 @@ paths:
               - percent
             properties:
               percent:
-                description: |
-                  The estimated remaining distance the car can travel (in
-                  Kilometers)
+                description: The remaining fuel level as a percent
                 type: number
                 format: integer
                 example: 40
@@ -103,7 +101,7 @@ paths:
       - $ref: '#/parameters/idParam'
     get:
       description: |
-        Returns the battery percent level
+        Returns the battery percent level remaining in the vehicle
       responses:
         '200':
           description: Success
@@ -114,7 +112,7 @@ paths:
               - percent
             properties:
               percent:
-                description: The remaining level of battery
+                description: The remaining level of battery percent
                 type: number
                 format: integer
                 example: 31
