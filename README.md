@@ -10,6 +10,10 @@ Smartcar API implementation for GM API endpoints.
 * `yarn lint` runs eslint 
 * `yarn docs` runs code generator
 
+## Schema
+The API schema is written in Swagger v2.0. Follow [this link](http://petstore.swagger.io/?url=https://raw.githubusercontent.com/nodox/smartcar/api/vehicle/swagger.yaml) to view the api.
+
+
 ## Core buisness logic files
 * `./server/routes/` contains api routes
 * `./server/controllers/` contains handlers
