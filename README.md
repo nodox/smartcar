@@ -8,7 +8,7 @@ Smartcar API implementation for GM API endpoints.
 ## Task to run
 * `yarn mocha` runs the test suite
 * `yarn lint` runs eslint 
-* `yarn`
+* `yarn docs` runs code generator
 
 ## Core buisness logic files
 * `./server/routes/` contains api routes
