@@ -1,12 +1,14 @@
 # README
-Smartcar API implementation for GM API endpoints
+Smartcar API implementation for GM API endpoints.
 
 ## Getting started
 * Start project with `yarn install && yarn serve`
+  * Assumes you have yarn installed
 
 ## Task to run
 * `yarn mocha` runs the test suite
 * `yarn lint` runs eslint 
+* `yarn`
 
 ## Core buisness logic files
 * `./server/routes/` contains api routes
