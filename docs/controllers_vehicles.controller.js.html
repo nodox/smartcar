@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/vehicles.controller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/vehicles.controller.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const axios = require('axios');
+const transformer = require('../helpers/transformer');
+
+/**
+ * Returns the vehicle specified by the id.
+ * @param {number} id - The id of the vehicle
+ */
+const getVehiclesById = (req, res) => {
+  const paramsDataForGM = {
+    id: req.params.id.toString(),
+    responseType: 'JSON',
+  };
+
+  axios.post('http://gmapi.azurewebsites.net/getVehicleInfoService', paramsDataForGM, {
+    transformResponse: transformer.vehicleResponseTransformer,
+  })
+  .then((responseObject) => {
+    res.status(200).send(responseObject.data);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+};
+
+/**
+ * Returns the status of the doors on the vehicle specified by the id.
+ * @param {number} id - The id of the vehicle
+ */
+const getVehiclesDoorsStatus = (req, res) => {
+  const paramsDataForGM = {
+    id: req.params.id.toString(),
+    responseType: 'JSON',
+  };
+
+  axios.post('http://gmapi.azurewebsites.net/getSecurityStatusService', paramsDataForGM, {
+    transformResponse: transformer.doorStatusResponseTransformer,
+  })
+  .then((responseObject) => {
+    res.status(200).send(responseObject.data);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+};
+
+/**
+ * Returns the fuel levels on the vehicle specified by the id.
+ * @param {number} id - The id of the vehicle
+ */
+const getVehiclesFuelLevel = (req, res) => {
+  const paramsDataForGM = {
+    id: req.params.id.toString(),
+    responseType: 'JSON',
+  };
+
+  axios.post('http://gmapi.azurewebsites.net/getEnergyService', paramsDataForGM, {
+    transformResponse: transformer.fuelLevelsResponseTransformer,
+  })
+  .then((responseObject) => {
+    res.send(responseObject.data);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+};
+
+/**
+ * Returns the battery level on the vehicle specified by the id.
+ * @param {number} id - The id of the vehicle
+ */
+const getVehiclesBatteryLevel = (req, res) => {
+  const paramsDataForGM = {
+    id: req.params.id.toString(),
+    responseType: 'JSON',
+  };
+
+  axios.post('http://gmapi.azurewebsites.net/getEnergyService', paramsDataForGM, {
+    transformResponse: transformer.batteryResponseTransformer,
+  })
+  .then((responseObject) => {
+    res.send(responseObject.data);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+};
+
+/**
+ * Returns the engine state on the vehicle specified by the id.
+ * @param {number} id - The id of the vehicle
+ */
+const setVehiclesEngineState = (req, res) => {
+  const commandsForGM = {
+    START: 'START_VEHICLE',
+    STOP: 'STOP_VEHICLE',
+  };
+
+  const action = commandsForGM[req.body.action.toString()];
+  const paramsDataForGM = {
+    id: req.params.id.toString(),
+    command: action,
+    responseType: 'JSON',
+  };
+
+  axios.post('http://gmapi.azurewebsites.net/actionEngineService', paramsDataForGM, {
+    transformResponse: transformer.engineResponseTransformer,
+  })
+  .then((responseObject) => {
+    res.status(200).send(responseObject.data);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+};
+
+module.exports = {
+  getVehiclesById,
+  getVehiclesDoorsStatus,
+  getVehiclesFuelLevel,
+  getVehiclesBatteryLevel,
+  setVehiclesEngineState,
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#batteryResponseTransformer">batteryResponseTransformer</a></li><li><a href="global.html#doorStatusResponseTransformer">doorStatusResponseTransformer</a></li><li><a href="global.html#engineResponseTransformer">engineResponseTransformer</a></li><li><a href="global.html#fuelLevelsResponseTransformer">fuelLevelsResponseTransformer</a></li><li><a href="global.html#getVehiclesBatteryLevel">getVehiclesBatteryLevel</a></li><li><a href="global.html#getVehiclesById">getVehiclesById</a></li><li><a href="global.html#getVehiclesDoorsStatus">getVehiclesDoorsStatus</a></li><li><a href="global.html#getVehiclesFuelLevel">getVehiclesFuelLevel</a></li><li><a href="global.html#setVehiclesEngineState">setVehiclesEngineState</a></li><li><a href="global.html#vehicleResponseTransformer">vehicleResponseTransformer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.2</a> on Wed Jul 12 2017 23:27:56 GMT-0500 (CDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

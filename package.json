@@ -9,6 +9,7 @@
     "express": "^4.15.3",
     "helmet": "^3.6.1",
     "jade": "^1.11.0",
+    "jsdoc": "^3.5.2",
     "lodash": "^4.17.4",
     "morgan": "^1.8.2",
     "pug": "^2.0.0-rc.2",
@@ -30,7 +31,7 @@
     "react-scripts": "1.0.10"
   },
   "scripts": {
-    "docs": "./node_modules/.bin/jsdoc ./server/",
+    "docs": "./node_modules/.bin/jsdoc -r -d ./docs ./server/",
     "lint": "./node_modules/.bin/eslint ./server/",
     "mocha": "./node_modules/mocha/bin/mocha",
     "serve": "node ./bin/www",

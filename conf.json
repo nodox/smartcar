@@ -1,5 +1,6 @@
 {
     "plugins": [],
+    "destination": "./docs", 
     "recurseDepth": 10,
     "source": {
         "includePattern": ".+\\.js(doc|x)?$",
