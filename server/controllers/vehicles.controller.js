@@ -1,12 +1,12 @@
-var axios = require('axios');
-var transformer = require('../helpers/transformer');
+let axios = require('axios');
+let transformer = require('../helpers/transformer');
 
 /**
  * Returns the vehicle specified by the id.
  * @param {number} id - The id of the vehicle
  */
 const getVehiclesById = (req, res) => {
-  var paramsDataForGM = { 'id': req.params.id.toString(), "responseType": "JSON" };
+  let paramsDataForGM = { 'id': req.params.id.toString(), "responseType": "JSON" };
   axios.post('http://gmapi.azurewebsites.net/getVehicleInfoService', paramsDataForGM, {
     transformResponse: transformer.vehicleResponseTransformer
   })
@@ -65,21 +65,19 @@ const getVehiclesBatteryLevel = (req, res) => {
   });
 }
 
-
 /**
  * Returns the engine state on the vehicle specified by the id.
  * @param {number} id - The id of the vehicle
  */
 const setVehiclesEngineState = (req, res) => {
 
-  // XSS protection needed??
   const commandsForGM = {
     "START": "START_VEHICLE",
     "STOP": "STOP_VEHICLE"
   };
 
   let action = commandsForGM[req.body.action.toString()];
-  var paramsDataForGM = { 'id': req.params.id.toString(), "command": action, "responseType": "JSON" };
+  let paramsDataForGM = { 'id': req.params.id.toString(), "command": action, "responseType": "JSON" };
   axios.post('http://gmapi.azurewebsites.net/actionEngineService', paramsDataForGM, { 
     transformResponse: transformer.engineResponseTransformer
   })
@@ -89,10 +87,6 @@ const setVehiclesEngineState = (req, res) => {
     res.status(400).send(err);
   });
 }
-
-
-
-
 
 module.exports = {
   getVehiclesById,
